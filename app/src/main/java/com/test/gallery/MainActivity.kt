@@ -6,9 +6,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
 import com.test.gallery.gallery.GalleryActivity
 import timber.log.Timber
 
@@ -57,35 +55,19 @@ class MainActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == PICK_VIDEO) {
+        if (resultCode == Activity.RESULT_OK
+                && (requestCode == PICK_IMAGE || requestCode == PICK_VIDEO)) {
             data?.data?.let {
-                val selectedVideoPath = getVideoPath(it)
-                Timber.d("pick video")
+                val selectedVideoPath = getMediaPath(it)
+                Timber.d("pick media")
                 selectedVideoPath?.let { path -> paths.add(path) }
             }
         }
-        if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE) {
-            data?.data?.let {
-                val selectedImagePath = getImagePath(it)
-                Timber.d("pick image")
-                selectedImagePath?.let { path -> paths.add(path) }
-            }
-        }
     }
 
-    fun getVideoPath(uri: Uri): String? {
+    fun getMediaPath(uri: Uri): String? {
         //todo: find another way to take video/picture
         val projection = arrayOf(MediaStore.Video.Media.DATA)
-        val cursor: Cursor? = contentResolver.query(uri, projection, null, null, null)
-        return if (cursor != null) {
-            val index: Int = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA)
-            cursor.moveToFirst()
-            cursor.getString(index)
-        } else null
-    }
-
-    fun getImagePath(uri: Uri): String? {
-        val projection = arrayOf(MediaStore.Images.Media.DATA)
         val cursor: Cursor? = contentResolver.query(uri, projection, null, null, null)
         return if (cursor != null) {
             val index: Int = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA)
