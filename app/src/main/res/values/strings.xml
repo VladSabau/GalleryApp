@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Gallery</string>
+    <string name="add_picture">Add picture</string>
+    <string name="add_video">Add video</string>
+    <string name="show_gallery">Show gallery</string>
+</resources>
