@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.test.gallery.BaseActivity
 import com.test.gallery.R
@@ -61,7 +60,7 @@ class GalleryActivity : BaseActivity(), GalleryView {
     }
 
     override fun init(list: ArrayList<GalleryUiModel>) {
-        val galleryPagerAdapter = GalleryPagerAdapter(this)
+        val galleryPagerAdapter = GalleryAdapter(this)
         galleryPagerAdapter.modelChange(list)
         viewPager?.adapter = galleryPagerAdapter
         viewPager?.offscreenPageLimit = 3
